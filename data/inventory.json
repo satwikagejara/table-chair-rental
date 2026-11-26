@@ -1,0 +1,66 @@
+[
+  {
+    "id": "chair-folding-white",
+    "name": "White Resin Folding Chair",
+    "category": "Chair",
+    "vendor": "Lone Star Event Rentals",
+    "price_per_day": 2.50,
+    "total_stock": 150
+  },
+  {
+    "id": "chair-chiavari-gold",
+    "name": "Gold Chiavari Banquet Chair",
+    "category": "Chair",
+    "vendor": "Celina Party Supply",
+    "price_per_day": 6.00,
+    "total_stock": 80
+  },
+  {
+    "id": "chair-crossback-wood",
+    "name": "Rustic Oak Crossback Chair",
+    "category": "Chair",
+    "vendor": "North Texas Event Co.",
+    "price_per_day": 7.50,
+    "total_stock": 60
+  },
+  {
+    "id": "chair-folding-black",
+    "name": "Black Padded Folding Chair",
+    "category": "Chair",
+    "vendor": "Lone Star Event Rentals",
+    "price_per_day": 2.00,
+    "total_stock": 200
+  },
+  {
+    "id": "table-round-60",
+    "name": "60-Inch Round Banquet Table",
+    "category": "Table",
+    "vendor": "Lone Star Event Rentals",
+    "price_per_day": 12.00,
+    "total_stock": 25
+  },
+  {
+    "id": "table-rect-6ft",
+    "name": "6-Foot Rectangular Folding Table",
+    "category": "Table",
+    "vendor": "Celina Party Supply",
+    "price_per_day": 10.00,
+    "total_stock": 30
+  },
+  {
+    "id": "table-rect-8ft",
+    "name": "8-Foot Banquet Rectangular Table",
+    "category": "Table",
+    "vendor": "North Texas Event Co.",
+    "price_per_day": 13.50,
+    "total_stock": 20
+  },
+  {
+    "id": "table-cocktail-high",
+    "name": "30-Inch Round Highboy Cocktail Table",
+    "category": "Table",
+    "vendor": "Celina Party Supply",
+    "price_per_day": 15.00,
+    "total_stock": 18
+  }
+]
