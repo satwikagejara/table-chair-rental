@@ -14,7 +14,60 @@
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-6 py-8">
+  <main class="max-w-5xl mx-auto px-6 py-8 space-y-8">
+    {% if booking %}
+    <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-emerald-900">
+      <p class="font-semibold">Booking Confirmed (#{{ booking.booking_id }})</p>
+      <p class="text-sm mt-1">
+        Reserved <strong>{{ booking.quantity }}</strong> × <strong>{{ booking.item_name }}</strong> for
+        <strong>{{ booking.event_date }}</strong> (${{ "%.2f"|format(booking.total_price) }} total) under
+        <strong>{{ booking.customer_name }}</strong>.
+      </p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="rounded-xl bg-rose-50 border border-rose-200 p-4 text-rose-900">
+      <p class="font-semibold">Could Not Complete Booking</p>
+      <p class="text-sm mt-1">{{ error }}</p>
+    </div>
+    {% endif %}
+
+    <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-slate-900 mb-4">Reserve Items</h2>
+      <form action="/book" method="POST" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label for="item_id" class="block text-xs font-semibold uppercase text-slate-600 mb-1">Item</label>
+          <select id="item_id" name="item_id" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white">
+            {% for item in items %}
+            <option value="{{ item.id }}">{{ item.name }} (${{ "%.2f"|format(item.price_per_day) }}/day)</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <label for="event_date" class="block text-xs font-semibold uppercase text-slate-600 mb-1">Event Date</label>
+          <input id="event_date" name="event_date" type="date" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+        </div>
+
+        <div>
+          <label for="quantity" class="block text-xs font-semibold uppercase text-slate-600 mb-1">Quantity</label>
+          <input id="quantity" name="quantity" type="number" min="1" value="1" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+        </div>
+
+        <div>
+          <label for="customer_name" class="block text-xs font-semibold uppercase text-slate-600 mb-1">Your Name</label>
+          <input id="customer_name" name="customer_name" type="text" placeholder="Optional" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+        </div>
+
+        <div class="md:col-span-4 flex justify-end">
+          <button type="submit" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5">
+            Book Now
+          </button>
+        </div>
+      </form>
+    </section>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {% for item in items %}
       <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
@@ -35,6 +88,24 @@
       </div>
       {% endfor %}
     </div>
+
+    <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-slate-900 mb-3">Saved Bookings ({{ bookings|length }})</h2>
+      {% if bookings %}
+      <ul class="divide-y divide-slate-100 text-sm">
+        {% for b in bookings %}
+        <li class="py-2.5 flex items-center justify-between gap-4">
+          <span>
+            <strong>{{ b.item_name }}</strong> × {{ b.quantity }} for <strong>{{ b.event_date }}</strong> ({{ b.customer_name }})
+          </span>
+          <span class="font-semibold text-slate-900">${{ "%.2f"|format(b.total_price) }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-sm text-slate-500">No bookings saved yet.</p>
+      {% endif %}
+    </section>
   </main>
 </body>
 </html>
