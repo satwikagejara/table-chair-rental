@@ -39,6 +39,22 @@ def book():
         error=error,
     )
 
+@app.route("/cancel", methods=["POST"])
+def cancel():
+    booking_id = request.form.get("booking_id", "").strip()
+    confirm_booking_id = request.form.get("confirm_booking_id", "").strip()
+    cancelled, error = storage.cancel_booking(booking_id, confirm_booking_id)
+
+    items = storage.load_inventory()
+    bookings = storage.load_bookings()
+    return render_template(
+        "catalog.html",
+        items=items,
+        bookings=bookings,
+        cancelled=cancelled,
+        error=error,
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

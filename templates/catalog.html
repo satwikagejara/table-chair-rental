@@ -26,6 +26,16 @@
     </div>
     {% endif %}
 
+    {% if cancelled %}
+    <div class="rounded-xl bg-amber-50 border border-amber-200 p-4 text-amber-900">
+      <p class="font-semibold">Booking Cancelled (#{{ cancelled.booking_id }})</p>
+      <p class="text-sm mt-1">
+        Released <strong>{{ cancelled.quantity }}</strong> × <strong>{{ cancelled.item_name }}</strong> for
+        <strong>{{ cancelled.event_date }}</strong> ({{ cancelled.customer_name }}).
+      </p>
+    </div>
+    {% endif %}
+
     {% if error %}
     <div class="rounded-xl bg-rose-50 border border-rose-200 p-4 text-rose-900">
       <p class="font-semibold">Could Not Complete Booking</p>
@@ -94,11 +104,29 @@
       {% if bookings %}
       <ul class="divide-y divide-slate-100 text-sm">
         {% for b in bookings %}
-        <li class="py-2.5 flex items-center justify-between gap-4">
+        <li class="py-2.5 flex flex-wrap items-center justify-between gap-4">
           <span>
             <strong>{{ b.item_name }}</strong> × {{ b.quantity }} for <strong>{{ b.event_date }}</strong> ({{ b.customer_name }})
           </span>
-          <span class="font-semibold text-slate-900">${{ "%.2f"|format(b.total_price) }}</span>
+          <div class="flex items-center gap-3">
+            <span class="font-semibold text-slate-900">${{ "%.2f"|format(b.total_price) }}</span>
+            <form action="/cancel" method="POST" class="flex items-center gap-2">
+              <input type="hidden" name="booking_id" value="{{ b.booking_id }}" />
+              <input
+                type="text"
+                name="confirm_booking_id"
+                placeholder="Enter ID to confirm"
+                required
+                class="w-36 rounded-md border border-slate-300 px-2 py-1 text-xs"
+              />
+              <button
+                type="submit"
+                class="rounded-md border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold px-2.5 py-1"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
         </li>
         {% endfor %}
       </ul>

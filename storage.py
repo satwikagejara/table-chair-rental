@@ -72,3 +72,22 @@ def create_booking(item_id, event_date, quantity, customer_name):
     bookings.append(booking)
     save_bookings(bookings)
     return booking, None
+
+def cancel_booking(booking_id, confirm_booking_id=None):
+    cleaned_id = (booking_id or "").strip()
+    cleaned_confirm = (confirm_booking_id or "").strip()
+
+    if not cleaned_id:
+        return None, "Booking ID is required to cancel."
+
+    if not cleaned_confirm or cleaned_confirm != cleaned_id:
+        return None, f"Please enter the booking ID correctly to confirm cancellation."
+
+    bookings = load_bookings()
+    for idx, b in enumerate(bookings):
+        if b.get("booking_id") == cleaned_id:
+            removed = bookings.pop(idx)
+            save_bookings(bookings)
+            return removed, None
+
+    return None, f"No booking found with ID '{cleaned_id}'."
